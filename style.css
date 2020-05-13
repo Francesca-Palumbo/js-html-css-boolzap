@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: 0;
-    font-family: ‘Times New Roman’, Times, serif;
+    font-family: 'Lato', sans-serif;
 }
 
 i{
@@ -181,6 +181,18 @@ header{
     color: #424949;
 }
 
+.sezione-input{
+    height: 30px;
+    width: 98%;
+    border: none;
+    text-align: center;
+    line-height: 30px;
+    vertical-align: middle;
+    display: inline-block;
+    background-color: white;
+    color: #424949;
+}
+
 #lista-chat{
     height: 80%;
     width: 100%;
@@ -273,7 +285,7 @@ footer{
     padding-left: 10px;
 }
 
-#contenitore{
+#contenitore-chat{
     width: 80%;
     height: 100%;
     padding-top: 30px;
@@ -302,6 +314,7 @@ footer{
     vertical-align: middle;
     text-align: center;
     margin: auto;
+    margin-top: 15px;
 }
 
 .testo-messaggio-ricevuto{
@@ -319,6 +332,7 @@ footer{
     vertical-align: middle;
     text-align: center;
     margin: auto;
+    margin-top: 15px;
 }
 
 .testo-messaggio-inviato{
@@ -328,5 +342,10 @@ footer{
 
 .orari-messaggi{
     font-size: 9px;
+}
 
+/* Template per Minestone 1 */
+
+.template {
+	display: none;
 }
