@@ -57,6 +57,59 @@ $('.sezione-input').keyup(function(){
     }
 });
 
+// MILESTONE 3
+// Click sul contatto​ mostra la conversazione del contatto cliccato, è possibile inserirenuovi messaggi per ogni conversazione●Cancella messaggio: ​cliccando sul messaggio appare un menu a tendina che permette di cancellare il messaggio selezionato
+
+//
+// intercetto il click su un contatto
+$('.chat-nella-lista').click(function() {
+
+    // tolgo la classe active a tutti i div chat-nella-lista
+    $('.chat-nella-lista').removeClass('active');
+    // aggiungo la classe active al contatto su cui ho cliccato
+    $(this).addClass('active');
+
+    // recupero il valore dell'attributo data-chat del contatto su cui ho cliccato
+    var chat = $(this).data('chat');
+    console.log(chat);
+    // tolgo la classe active a tutti i div contenitore-chat per nascondere tutti i pannelli delle chat
+    $('.contenitore-chat').removeClass('active');
+
+
+    // recupero il div contenitore-chat che ha lo stesso attributo data-chat del contatto su cui ho cliccato  e ci assegno  la classe active
+    $('.contenitore-chat').each(function(){
+        var chat_messaggi = $(this).attr('data-chat');
+        console.log('data-chat messaggi' + chat_messaggi);
+        // se questo data-chat tra i contatti è uguale alla data-chat  del contenitore-chat, allora gli aggiungo la classe 'active'
+        if (chat == chat_messaggi) {
+            $(this).addClass('active');
+        }
+    });
+
+    // o più semplicemente
+    // $('.contenitore-chat[data-chat="'+ chat +'"]').addClass('active');
+
+    // prendo il nome del contatto su cui ho cliccato
+    var nome_contatto = $(this).find('.nome-persona').text();
+    // console.log(nome_contatto);
+    // inserisco il nome del contatto nella chat aperta di destra, con i messaggi
+    $('.nome-chat-aperta').text(nome_contatto);
+
+    // recupero il percorso del file dell'immagine del contatto su cui ho cliccato
+    var src_contatto = $(this).find('.cerchio-immagine img').attr('src');
+    // console.log(src_contatto);
+    // imposto il percorso del file dell'immagine nella parte di intestazione di destra
+    $('.cerchio-avatar img ').attr('src', src_contatto);
+
+});
+
+// intercetto il click sull'icona del dropdown del messaggio
+$('.contenitore-chat').on('click' , '.message-options', function(){
+    console.log('click');
+
+// visualizzo il div "message-options-panel" corrispondente al messaggio su cui ho cliccato
+    $(this).siblings('.message-options-panel').toggleClass('active');
+});
 
 // Minestone 1
 
@@ -64,7 +117,6 @@ $('.sezione-input').keyup(function(){
 function invia_messaggio(){
     // recupero il testo inserito dall'utente nell'input
     var testo_utente = $(".testo-inserito").val();
-    console.log(testo_utente);
     if(testo_utente !=''){
         // faccio una copia del template per creare un nuovo messaggio
         var nuovo_messaggio = $('.template .message').clone();
@@ -75,7 +127,7 @@ function invia_messaggio(){
         // aggiungo la classe "sent" al nuovo_messaggio
         nuovo_messaggio.addClass('messaggio-inviato');
         // inserisco il nuovo messaggio nel contenitore di tutti i messaggi della conversazione
-        $('#contenitore-chat').append(nuovo_messaggio);
+        $('.contenitore-chat.active').append(nuovo_messaggio);
         // svuoto la charset: imposto l'input a stringa vuota
         $('.testo-inserito').val('');
         // risposta del pc
@@ -95,5 +147,5 @@ function risposta_pc(){
     // inserisco il testo "ok" nello span "message-text"
     nuovo_messaggio_pc.children('.message-text').text('ok');
     // inserisco il nuovo messaggio nel contenitore di tutti i messaggi della conversazione
-    $('#contenitore-chat').append(nuovo_messaggio_pc);
+    $('.contenitore-chat.active').append(nuovo_messaggio_pc);
 }

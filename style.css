@@ -236,7 +236,7 @@ header{
     margin-top: 14px;
 }
 
-#colore-chat-aperta{
+.chat-nella-lista:hover{
     background-color: #DCDCDC;
 }
 
@@ -285,11 +285,16 @@ footer{
     padding-left: 10px;
 }
 
-#contenitore-chat{
+.contenitore-chat{
     width: 80%;
     height: 100%;
     padding-top: 30px;
     margin: auto;
+    display: none;
+}
+
+.contenitore-chat.active{
+    display: block;   
 }
 
 #oggi{
