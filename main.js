@@ -1,10 +1,10 @@
 // MINESTONE 1
-// intercetto il click sull'icona del microfono pe rinviare il testo
+// applico il click sull'icona del microfono per inviare il testo
 $('.smile-microfono-contenitore').click(invia_messaggio);
 
-// intercetto l'input "invio" della tastiera per inviare il messaggio
+// applico il click sull'input "invio" della tastiera per inviare il messaggio
 $('.testo-inserito').keypress(function(event){
-    // verifico che l'utente abbia inserito "enter" che corrisponde al numeno 13 per keypress
+    // il messaggio viene inviato solo se premo "enter" che corrisponde al numeno 13 per la funzione keypress
     if (event.which == 13 ) {
         invia_messaggio();
     }
@@ -26,23 +26,26 @@ $('.testo-inserito').blur(function(){
 });
 
 // Minestone 2 parte 2
+// Ricerca utenti: ​scrivendo qualcosa nell’input a sinistra, vengono visualizzati solo icontatti il cui nome contiene le lettere inserite (es, Marco, Matteo Martina -> Scrivo“mar” rimangono solo Marco e Martina)
 
 // intercetto il click sull'icona della lente per la ricerca
 // $('.search-label').click(function(){
+
 // intercetto l'utente che digita nell'input della ricercato
+// keyup=attiva quell'evento su un elemento
 $('.sezione-input').keyup(function(){
-    // recupero il testo contenuto nell'input di ricerca
+    //il testo contenuto nell'input di ricerca deve avere le funzioni val-trim e toLowerCase
     var testo_ricerca = $('.sezione-input').val().trim().toLowerCase();
     console.log(testo_ricerca);
     // recupero tutti i contatti e per ciascuno verifico se il nome corrisponde al testo cercato
     if(testo_ricerca != ''){
-        // il testo ricercato non è vuoto => applico la ricerca e filtro i contatti
+        //se il testo ricercato non è vuoto => inizio la funzione che cercherà la corrispondenza per ogni contatto
         $('.chat-nella-lista').each(function(){
             // recupero il nome di questo contatto
             var nome_contatto = $(this).find('.nome-persona').text().toLowerCase();
             console.log(nome_contatto);
             if (nome_contatto.includes(testo_ricerca)) {
-                // se corrisponde visualizzo il contatto
+                // se corrisponde => visualizzo il contatto
                 $(this).show();
                 console.log('corrisponde');
             } else {
@@ -52,16 +55,15 @@ $('.sezione-input').keyup(function(){
             }
         });
     }else {
-        // il testo ricercato è vuoto => visualizzo tutti i contatti
+        //se il testo ricercato è vuoto => visualizzo tutti i contatti
         $('.chat-nella-lista').show();
     }
 });
 
 // MILESTONE 3
-// Click sul contatto​ mostra la conversazione del contatto cliccato, è possibile inserirenuovi messaggi per ogni conversazione●Cancella messaggio: ​cliccando sul messaggio appare un menu a tendina che permette di cancellare il messaggio selezionato
+// Click sul contatto​ mostra la conversazione del contatto cliccato, è possibile inserire nuovi messaggi per ogni conversazione
 
-//
-// intercetto il click su un contatto
+// applico la funzione click sui contatti a sinistra
 $('.chat-nella-lista').click(function() {
 
     // tolgo la classe active a tutti i div chat-nella-lista
@@ -89,10 +91,12 @@ $('.chat-nella-lista').click(function() {
     // o più semplicemente
     // $('.contenitore-chat[data-chat="'+ chat +'"]').addClass('active');
 
+
     // prendo il nome del contatto su cui ho cliccato
     var nome_contatto = $(this).find('.nome-persona').text();
+
     // console.log(nome_contatto);
-    // inserisco il nome del contatto nella chat aperta di destra, con i messaggi
+    // associo il nome del contatto, alla chat aperta di destra
     $('.nome-chat-aperta').text(nome_contatto);
 
     // recupero il percorso del file dell'immagine del contatto su cui ho cliccato
@@ -103,13 +107,29 @@ $('.chat-nella-lista').click(function() {
 
 });
 
-// intercetto il click sull'icona del dropdown del messaggio
-$('.contenitore-chat').on('click' , '.message-options', function(){
-    console.log('click');
 
+// MINESTONE 3 PARTE 2
+// Cancella messaggio: ​cliccando sul messaggio appare un menu a tendina che permette di cancellare il messaggio selezionato
+
+// intercetto il click sull'icona del dropdown del messaggio
+// uso la funzione 'on' , ci agganci l'evento 'click' ma che sia specifico su un elemento con classe 'message-options'
+// con on('click')=  STO AGGANCIANDO un qualcosa che rimane in ascolto di quell'evento,  e che reagisce quando quell'evento SI VERIFICA. LA FUNZIONE SI ESEGUA, QUANDO SUCCEDE IL CLICK
+$('.contenitore-chat').on('click' , '.message-options', function(){
+    // console.log('click');
 // visualizzo il div "message-options-panel" corrispondente al messaggio su cui ho cliccato
     $(this).siblings('.message-options-panel').toggleClass('active');
 });
+
+// quando esco con il mpuse da un messaggio, chiudo un eventuale pannella di opzioni aperto
+// evento mouseleave da tutto il messaggio
+$('.contenitore-chat').on('mouseleave', '.message', function(){
+    // così lo tolgo d'appertutto
+    // $('.message-options-panel.active').removeClass('active')
+    // parents prende tutti i contenitori e risale fino alla radice.
+    // closest appena trova un padre che corrisponde al selettore (.message) => si ferma
+    $(this).closest('.message').remove();
+});
+
 
 // Minestone 1
 
@@ -137,6 +157,7 @@ function invia_messaggio(){
 }
 
 // Minestone 2 prima parte
+// Risposta dall’interlocutore: ​ad ogni inserimento di un messaggio, l’utente riceveràun “ok” come risposta, che apparirà dopo 1 secondo.
 
 // funzione per aggiungere alla conversazione la risposta del pc
 function risposta_pc(){

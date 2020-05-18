@@ -294,7 +294,7 @@ footer{
 }
 
 .contenitore-chat.active{
-    display: block;   
+    display: block;
 }
 
 #oggi{
@@ -329,6 +329,7 @@ footer{
 
 .messaggio-inviato{
     background-color: #ccff99;
+    background: #D5F9BA;
     line-height: 30px;
     padding: 4px;
     border-radius: 10px;
@@ -353,4 +354,69 @@ footer{
 
 .template {
 	display: none;
+}
+
+
+/*** fa-chevron-down ***/
+
+.contenitore-chat .message {
+	position: relative;
+	margin: 5px 0;
+	padding: 15px 15px 20px 15px;
+	min-width: 20%;
+	max-width: 60%;
+	border-radius: 10px;
+	font-size: 15px;
+}
+
+.contenitore-chat .message::after {
+	content: '';
+	display: table;
+	overflow: hidden;
+	clear: both;
+}
+
+.contenitore-chat .message:hover .message-options, .right .right-messages .message .message-options.active {
+	display: block;
+}
+
+.contenitore-chat .message .message-options {
+	display: none;
+	color: #B6B9BB;
+	cursor: pointer;
+}
+
+.contenitore-chat .message .message-options-panel {
+	display: none;
+	position: absolute;
+	bottom: -75px;
+	width: 150px;
+	height: 80px;
+	background: white;
+	box-shadow: 0px 0px 40px -15px rgba(0,0,0,0.75);
+}
+
+.contenitore-chat .message .message-options-panel.active {
+	display: block;
+}
+
+.contenitore-chat .message .message-options-panel > div {
+	cursor: pointer;
+	width: 100%;
+	height: 50%;
+	line-height: 40px;
+	font-size: 14px;
+	text-align: center;
+}
+
+.contenitore-chat .message .message-options-panel > div:hover {
+	color: #B6B9BB;
+}
+
+.contenitore-chat .message .message-time {
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+	font-size: 10px;
+	color: #B6B9BB;
 }
