@@ -1,3 +1,8 @@
+// HANDLEBARS-Template
+var html_template   = $("template-messaggi").html();
+var template_function = Handlebars.compile(html_template);
+
+
 // MINESTONE 1
 // applico il click sull'icona del microfono per inviare il testo
 $('.smile-microfono-contenitore').click(invia_messaggio);
@@ -16,13 +21,13 @@ $('.testo-inserito').keypress(function(event){
 $('#input-scrivi-messaggio').focus(function(){
     // tolgo la classe "fa-microphone" dell'icona a destra dell'input
     // aggiungo la classe "fa paper plane"
-    $('.smile-microfono-contenitore').removeClass('.fa-microphone').addClass('.fa-paper-plane');
+    $('.smile-microfono-contenitore i').removeClass('.fa-microphone').addClass('.fa-paper-plane');
 });
 
 $('.testo-inserito').blur(function(){
     // tolgo la classe "fa-microphone" dell'icona a destra dell'input
     // aggiungo la classe "fa paper plane"
-    $('.smile-microfono-contenitore').removeClass('.fas .fa-paper-plane').addClass('.fas .fa-microphone');
+    $('.smile-microfono-contenitore i').removeClass('.fa-paper-plane').addClass('.fa-microphone');
 });
 
 // Minestone 2 parte 2
@@ -134,19 +139,61 @@ $('.contenitore-chat').on('mouseleave', '.message', function(){
 // Minestone 1
 
 // funzione per inviare un nuovo messaggio
+// function invia_messaggio(){
+//     // recupero il testo inserito dall'utente nell'input
+//     var testo_utente = $(".testo-inserito").val();
+//     if(testo_utente !=''){
+//         // faccio una copia del template per creare un nuovo messaggio
+//         var nuovo_messaggio = $('.template .message').clone();
+//         console.log(nuovo_messaggio);
+//
+//         // inserisco il testo dell'utente nello span message-text
+//         nuovo_messaggio.children('.message-text').text(testo_utente);
+//         // aggiungo la classe "messaggio-inviato" al nuovo_messaggio
+//         nuovo_messaggio.addClass('messaggio-inviato');
+//         // inserisco il nuovo messaggio nel contenitore di tutti i messaggi della conversazione
+//         $('.contenitore-chat.active').append(nuovo_messaggio);
+//         // svuoto la charset: imposto l'input a stringa vuota
+//         $('.testo-inserito').val('');
+//         // risposta del pc
+//         // imposto un timeout di 1 secondo e poi ci sarà la risposta del pc
+//         setTimeout(risposta_pc, 1000);
+//     }
+// }
+
+// Minestone 2 prima parte
+// Risposta dall’interlocutore: ​ad ogni inserimento di un messaggio, l’utente riceveràun “ok” come risposta, che apparirà dopo 1 secondo.
+
+// funzione per aggiungere alla conversazione la risposta del pc
+// function risposta_pc(){
+//     // faccio una copia del template per creare un nuovo invia_messaggio
+//     var nuovo_messaggio_pc = $('.template .message').clone();
+//     // aggiungo la classe "received" al messaggio
+//     nuovo_messaggio_pc.addClass('messaggio-ricevuto');
+//     // inserisco il testo "ok" nello span "message-text"
+//     nuovo_messaggio_pc.children('.message-text').text('ok');
+//     // inserisco il nuovo messaggio nel contenitore di tutti i messaggi della conversazione
+//     $('.contenitore-chat.active').append(nuovo_messaggio_pc);
+// }
+
+
+// HANDLEBARS-Template
+var html_template   = $("template-messaggi").html();
+var template_function = Handlebars.compile(html_template);
+
 function invia_messaggio(){
     // recupero il testo inserito dall'utente nell'input
     var testo_utente = $(".testo-inserito").val();
-    if(testo_utente !=''){
-        // faccio una copia del template per creare un nuovo messaggio
-        var nuovo_messaggio = $('.template .message').clone();
-        console.log(nuovo_messaggio);
+    // verifico che il testo digitato non sia vuoto (o che non contenga solo " ")
+    if(testo_utente.trim() !=''){
+        //
+        var placeholder = {
+        'classe' : 'messaggio-inviato',
+        'messaggio' : testo_utente
+    };
 
-        // inserisco il testo dell'utente nello span message-text
-        nuovo_messaggio.children('.message-text').text(testo_utente);
-        // aggiungo la classe "sent" al nuovo_messaggio
-        nuovo_messaggio.addClass('messaggio-inviato');
-        // inserisco il nuovo messaggio nel contenitore di tutti i messaggi della conversazione
+    var nuovo_messaggio = template_function(placeholder);
+
         $('.contenitore-chat.active').append(nuovo_messaggio);
         // svuoto la charset: imposto l'input a stringa vuota
         $('.testo-inserito').val('');
@@ -156,17 +203,15 @@ function invia_messaggio(){
     }
 }
 
-// Minestone 2 prima parte
-// Risposta dall’interlocutore: ​ad ogni inserimento di un messaggio, l’utente riceveràun “ok” come risposta, che apparirà dopo 1 secondo.
 
-// funzione per aggiungere alla conversazione la risposta del pc
 function risposta_pc(){
-    // faccio una copia del template per creare un nuovo invia_messaggio
-    var nuovo_messaggio_pc = $('.template .message').clone();
-    // aggiungo la classe "received" al messaggio
-    nuovo_messaggio_pc.addClass('messaggio-ricevuto');
-    // inserisco il testo "ok" nello span "message-text"
-    nuovo_messaggio_pc.children('.message-text').text('ok');
+    // creo un oggetto che andrà a compilare il template
+    var placeholder_pc = {
+        'classe' : 'messaggio-ricevuto',
+        'messaggio' : 'ok'
+    }
+
+    var nuovo_messaggio_pc = template_function(placeholder_pc);
     // inserisco il nuovo messaggio nel contenitore di tutti i messaggi della conversazione
     $('.contenitore-chat.active').append(nuovo_messaggio_pc);
 }
