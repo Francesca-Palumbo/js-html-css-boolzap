@@ -1,5 +1,5 @@
 // HANDLEBARS-Template
-var html_template   = $("template-messaggi").html();
+var html_template = $("#template-messaggi").html();
 var template_function = Handlebars.compile(html_template);
 
 
@@ -137,7 +137,6 @@ $('.contenitore-chat').on('mouseleave', '.message', function(){
 
 
 // Minestone 1
-
 // funzione per inviare un nuovo messaggio
 // function invia_messaggio(){
 //     // recupero il testo inserito dall'utente nell'input
@@ -145,7 +144,7 @@ $('.contenitore-chat').on('mouseleave', '.message', function(){
 //     if(testo_utente !=''){
 //         // faccio una copia del template per creare un nuovo messaggio
 //         var nuovo_messaggio = $('.template .message').clone();
-//         console.log(nuovo_messaggio);
+//         // console.log(nuovo_messaggio);
 //
 //         // inserisco il testo dell'utente nello span message-text
 //         nuovo_messaggio.children('.message-text').text(testo_utente);
@@ -176,42 +175,44 @@ $('.contenitore-chat').on('mouseleave', '.message', function(){
 //     $('.contenitore-chat.active').append(nuovo_messaggio_pc);
 // }
 
+//
+// // HANDLEBARS-Template
+// var html_template   = $("template-messaggi").html();
+// var template_function = Handlebars.compile(html_template);
 
-// HANDLEBARS-Template
-var html_template   = $("template-messaggi").html();
-var template_function = Handlebars.compile(html_template);
-
+// funzione per inviare un nuovo messaggio
 function invia_messaggio(){
     // recupero il testo inserito dall'utente nell'input
     var testo_utente = $(".testo-inserito").val();
     // verifico che il testo digitato non sia vuoto (o che non contenga solo " ")
-    if(testo_utente.trim() !=''){
-        //
+    if(testo_utente.trim() != ''){
+        //creo un oggetto che contiene i dati con cui compilare i template
         var placeholder = {
         'classe' : 'messaggio-inviato',
         'messaggio' : testo_utente
-    };
+        };
 
-    var nuovo_messaggio = template_function(placeholder);
+        // inserisco il nuovo messaggio nel contenitore di tutti i messaggi della conversazione
+        var nuovo_messaggio = template_function(placeholder);
 
-        $('.contenitore-chat.active').append(nuovo_messaggio);
-        // svuoto la charset: imposto l'input a stringa vuota
-        $('.testo-inserito').val('');
-        // risposta del pc
-        // imposto un timeout di 1 secondo e poi ci sarà la risposta del pc
-        setTimeout(risposta_pc, 1000);
+            $('.contenitore-chat.active').append(nuovo_messaggio);
+            // svuoto la charset: imposto l'input a stringa vuota
+            $('.testo-inserito').val('');
+            // risposta del pc
+            // imposto un timeout di 1 secondo e poi ci sarà la risposta del pc
+            setTimeout(risposta_pc, 1000);
     }
-}
+};
 
-
+//
 function risposta_pc(){
     // creo un oggetto che andrà a compilare il template
     var placeholder_pc = {
         'classe' : 'messaggio-ricevuto',
         'messaggio' : 'ok'
-    }
+    };
 
     var nuovo_messaggio_pc = template_function(placeholder_pc);
     // inserisco il nuovo messaggio nel contenitore di tutti i messaggi della conversazione
     $('.contenitore-chat.active').append(nuovo_messaggio_pc);
-}
+};
